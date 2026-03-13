@@ -1,45 +1,855 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<title>Victor Hugo | Portfolio</title>
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Victor Hugo | Portfólio</title>
+  <meta name="description" content="Portfólio profissional de Victor Hugo, Analista de Infraestrutura de TI e Desenvolvedor Python." />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --bg-soft: #14141b;
+      --card: rgba(255,255,255,0.05);
+      --card-border: rgba(255,255,255,0.08);
+      --text: #f5f7fb;
+      --muted: #a7adc2;
+      --primary: #6558FE;
+      --primary-soft: rgba(101, 88, 254, 0.18);
+      --accent: #CDFF4E;
+      --shadow: 0 20px 50px rgba(0,0,0,0.35);
+      --radius: 22px;
+      --container: 1160px;
+    }
 
-body{
-background:#111;
-color:white;
-font-family:Arial;
-text-align:center;
-padding:40px;
-}
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(101,88,254,0.22), transparent 30%),
+        radial-gradient(circle at 85% 15%, rgba(205,255,78,0.12), transparent 22%),
+        linear-gradient(180deg, #09090d 0%, #0e0f14 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-h1{
-color:#CDFF4E;
-}
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
 
-button{
-background:#6558FE;
-border:none;
-color:white;
-padding:10px 20px;
-margin-top:20px;
-}
+    .container {
+      width: min(var(--container), calc(100% - 2rem));
+      margin: 0 auto;
+    }
 
-</style>
+    .blur {
+      position: fixed;
+      inset: auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.45;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .blur.one { top: 4rem; left: -4rem; background: var(--primary); }
+    .blur.two { right: -4rem; top: 28rem; background: var(--accent); opacity: 0.18; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(10,10,14,0.7);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.95rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), #4a3ef0);
+      color: white;
+      box-shadow: 0 16px 40px rgba(101,88,254,0.35);
+      font-size: 0.95rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .hero {
+      padding: 5.5rem 0 3.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.45rem 0.9rem;
+      border: 1px solid rgba(205,255,78,0.14);
+      background: rgba(205,255,78,0.08);
+      color: var(--accent);
+      border-radius: 999px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 1.02;
+      margin: 0 0 1rem;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      font-size: 1.06rem;
+      color: var(--muted);
+      max-width: 58ch;
+      margin: 0 0 1.5rem;
+    }
+
+    .highlight { color: var(--accent); }
+    .gradient { 
+      background: linear-gradient(135deg, #ffffff 15%, #c9c6ff 50%, #cdff4e 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.95rem 1.2rem;
+      border-radius: 16px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #4e41fb);
+      color: white;
+      box-shadow: 0 20px 40px rgba(101,88,254,0.34);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); }
+
+    .btn-secondary {
+      border-color: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .pill {
+      padding: 0.5rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 1.3rem;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -20% auto auto -10%;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(101,88,254,0.35), transparent 65%);
+      pointer-events: none;
+    }
+
+    .terminal {
+      background: #090a0f;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 22px;
+      padding: 1.1rem;
+      min-height: 340px;
+    }
+
+    .terminal-top {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+    }
+
+    .code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.92rem;
+      color: #d6dbeb;
+      white-space: pre-wrap;
+    }
+
+    .code .key { color: #9da8ff; }
+    .code .value { color: #cdff4e; }
+    .code .label { color: #6be1ff; }
+
+    section {
+      padding: 1.2rem 0 4.5rem;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 2.5vw, 2.4rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(101,88,254,0.28);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(101,88,254,0.18), rgba(205,255,78,0.12));
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .card h3 {
+      margin: 0 0 0.6rem;
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.82rem;
+      padding: 0.38rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #dde1ef;
+    }
+
+    .project-link {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .skills-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .skill {
+      padding: 0.78rem 0.95rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(101,88,254,0.55), rgba(205,255,78,0.25));
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 3.2rem;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 18px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 0 0 5px rgba(101,88,254,0.12);
+    }
+
+    .timeline-meta {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .timeline h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1.08rem;
+    }
+
+    .timeline p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .contact-box {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1.2rem;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(101,88,254,0.16), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    .contact-links a {
+      padding: 0.82rem 1rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.09);
+      color: var(--text);
+      transition: 0.25s ease;
+    }
+
+    .contact-links a:hover { transform: translateY(-3px); }
+
+    .whatsapp {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #25d366, #1fb758);
+      color: white;
+      box-shadow: 0 20px 40px rgba(37, 211, 102, 0.35);
+      z-index: 60;
+      font-size: 1.45rem;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+
+    footer {
+      padding: 0 0 2.2rem;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid-3,
+      .grid-2,
+      .contact-box {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        gap: 0.8rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding-top: 4rem; }
+      .section-heading { align-items: flex-start; flex-direction: column; }
+      .cta-row, .hero-meta, .contact-links { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; }
+      .whatsapp { width: 54px; height: 54px; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="blur one"></div>
+  <div class="blur two"></div>
 
-<h1>Victor Hugo</h1>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#inicio">
+        <div class="brand-badge">VH</div>
+        <div>
+          <div>Victor Hugo</div>
+          <small style="color: var(--muted); font-weight: 500;">TI & Desenvolvimento</small>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#sobre">Sobre</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#tecnologias">Tecnologias</a>
+        <a href="#experiencia">Experiência</a>
+        <a href="#contato">Contato</a>
+      </div>
+    </div>
+  </nav>
 
-<p>
-Analista de Infraestrutura de TI | Desenvolvedor Python
-</p>
+  <header class="hero" id="inicio">
+    <div class="container hero-grid">
+      <div class="reveal visible">
+        <div class="eyebrow">Disponível para projetos e oportunidades</div>
+        <h1>
+          Transformo <span class="gradient">problemas de TI</span><br />
+          em <span class="highlight">soluções reais</span>.
+        </h1>
+        <p>
+          Sou <strong>Analista de Infraestrutura de TI</strong> e <strong>Desenvolvedor Python</strong>, com experiência em suporte corporativo, redes, Active Directory, Microsoft 365, VPN e desenvolvimento de sistemas web com Django e React.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#projetos">Ver Projetos</a>
+          <a class="btn btn-secondary" href="#contato">Falar Comigo</a>
+        </div>
+        <div class="hero-meta">
+          <div class="pill">Python • Django • React</div>
+          <div class="pill">Infraestrutura • Redes • N1/N2</div>
+          <div class="pill">São José do Rio Preto - SP</div>
+        </div>
+      </div>
 
-<p>
-Especialista em suporte corporativo, redes, automação e desenvolvimento de sistemas web.
-</p>
+      <div class="hero-card reveal">
+        <div class="terminal">
+          <div class="terminal-top">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="code">
+<span class="label">perfil</span> { 
+  <span class="key">nome</span>: <span class="value">"Victor Hugo Sinhoreli Gomes"</span>,
+  <span class="key">cargo</span>: <span class="value">"Analista de Infraestrutura de TI"</span>,
+  <span class="key">stack</span>: [<span class="value">"Python"</span>, <span class="value">"Django"</span>, <span class="value">"React"</span>, <span class="value">"SQL"</span>],
+  <span class="key">expertise</span>: [
+    <span class="value">"Suporte N1/N2"</span>,
+    <span class="value">"Active Directory"</span>,
+    <span class="value">"Microsoft 365"</span>,
+    <span class="value">"VPN Corporativa"</span>,
+    <span class="value">"Troubleshooting de Redes"</span>
+  ],
+  <span class="key">foco</span>: <span class="value">"Automação, sistemas web e soluções para empresas"</span>
+}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<button>Ver Projetos</button>
+  <section id="sobre">
+    <div class="container">
+      <div class="section-heading reveal">
+        <div>
+          <h2>Sobre mim</h2>
+        </div>
+        <p>
+          Tenho experiência com suporte técnico corporativo, infraestrutura de TI e desenvolvimento de soluções web para empresas que precisam automatizar processos, melhorar atendimento e organizar operações.
+        </p>
+      </div>
+      <div class="grid-3">
+        <div class="card reveal">
+          <div class="icon">🖥️</div>
+          <h3>Suporte e Infraestrutura</h3>
+          <p>Atuação com suporte N1/N2, Active Directory, Microsoft 365, VPN, formatação e padronização de máquinas, backup, restore e troubleshooting de ambientes corporativos.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon">🌐</div>
+          <h3>Redes e Operação</h3>
+          <p>Experiência com análise de conectividade, DNS, TCP/IP, mapeamento de rede, compartilhamentos, impressoras em rede, câmeras IP e apoio na estabilidade operacional.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon">⚙️</div>
+          <h3>Desenvolvimento Web</h3>
+          <p>Criação de sistemas web, APIs e landing pages utilizando Python, Django, React, SQL, Postman e Swagger, com foco em soluções simples e úteis para negócios.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section id="projetos">
+    <div class="container">
+      <div class="section-heading reveal">
+        <div>
+          <h2>Projetos em destaque</h2>
+        </div>
+        <p>
+          Projetos pensados para resolver problemas reais de empresas e profissionais, com foco em automação, organização e geração de resultados.
+        </p>
+      </div>
+      <div class="grid-3">
+        <article class="card project-card reveal">
+          <div class="project-top">
+            <div>
+              <h3>AgendaFácil</h3>
+              <p>Sistema de agendamento online para barbearias, clínicas de estética e prestadores de serviço.</p>
+            </div>
+            <a class="project-link" href="#contato">Solicitar demo</a>
+          </div>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">Django</span>
+            <span class="tag">React</span>
+            <span class="tag">SQL</span>
+            <span class="tag">API REST</span>
+          </div>
+          <p>Inclui cadastro de clientes, controle de agenda, painel administrativo e estrutura preparada para crescimento do negócio.</p>
+        </article>
+
+        <article class="card project-card reveal">
+          <div class="project-top">
+            <div>
+              <h3>Sistema de Farmácia</h3>
+              <p>Plataforma web para controle de estoque, vendas, movimentações e acompanhamento de produtos.</p>
+            </div>
+            <a class="project-link" href="#contato">Ver solução</a>
+          </div>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">Django</span>
+            <span class="tag">React</span>
+            <span class="tag">Swagger</span>
+            <span class="tag">Postman</span>
+          </div>
+          <p>Projeto pensado para melhorar a organização operacional e facilitar o processo de venda e controle interno.</p>
+        </article>
+
+        <article class="card project-card reveal">
+          <div class="project-top">
+            <div>
+              <h3>Landing Pages Comerciais</h3>
+              <p>Páginas desenvolvidas para captação de clientes, apresentação de serviços e geração de contatos no WhatsApp.</p>
+            </div>
+            <a class="project-link" href="#contato">Criar uma</a>
+          </div>
+          <div class="tag-row">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Responsivo</span>
+          </div>
+          <p>Design moderno, foco em conversão e estrutura ideal para pequenas empresas que precisam vender mais pela internet.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos">
+    <div class="container">
+      <div class="section-heading reveal">
+        <div>
+          <h2>Serviços</h2>
+        </div>
+        <p>
+          Atuo com soluções técnicas e digitais para empresas que precisam ganhar eficiência, organizar processos e melhorar sua presença online.
+        </p>
+      </div>
+      <div class="grid-3">
+        <div class="card reveal">
+          <div class="icon">🚀</div>
+          <h3>Desenvolvimento de Sistemas</h3>
+          <p>Criação de sistemas web sob demanda para controle de atendimento, agendamento, estoque, vendas, clientes e rotinas operacionais.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon">🔗</div>
+          <h3>APIs e Integrações</h3>
+          <p>Desenvolvimento e documentação de APIs REST, integração entre sistemas e apoio técnico com Postman e Swagger.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon">🛠️</div>
+          <h3>Suporte e Infraestrutura</h3>
+          <p>Atendimento técnico, análise de falhas, redes, Microsoft 365, Active Directory, VPN, backup, restore e suporte ao ambiente corporativo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tecnologias">
+    <div class="container">
+      <div class="section-heading reveal">
+        <div>
+          <h2>Tecnologias</h2>
+        </div>
+        <p>
+          Ferramentas e conhecimentos que utilizo no desenvolvimento de projetos e na resolução de problemas técnicos em ambientes corporativos.
+        </p>
+      </div>
+      <div class="card reveal">
+        <div class="skills-wrap">
+          <span class="skill">Python</span>
+          <span class="skill">Django</span>
+          <span class="skill">React</span>
+          <span class="skill">JavaScript</span>
+          <span class="skill">SQL</span>
+          <span class="skill">Git</span>
+          <span class="skill">Postman</span>
+          <span class="skill">Swagger</span>
+          <span class="skill">Active Directory</span>
+          <span class="skill">Microsoft 365</span>
+          <span class="skill">VPN Corporativa</span>
+          <span class="skill">TCP/IP</span>
+          <span class="skill">DNS</span>
+          <span class="skill">CFTV / Câmeras IP</span>
+          <span class="skill">Windows</span>
+          <span class="skill">Linux</span>
+          <span class="skill">Backup & Restore</span>
+          <span class="skill">Suporte N1/N2</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencia">
+    <div class="container">
+      <div class="section-heading reveal">
+        <div>
+          <h2>Experiência profissional</h2>
+        </div>
+        <p>
+          Trajetória construída em suporte corporativo, infraestrutura de TI, gestão e projetos voltados para solução de problemas reais.
+        </p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="card">
+            <div class="timeline-meta">2025 – 2026</div>
+            <h3>ALL RISK • Analista de Suporte N2</h3>
+            <p>Atuação com suporte técnico avançado, Active Directory, Microsoft 365, VPN, troubleshooting de redes, backup, restore, chamados técnicos e suporte a câmeras IP.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="card">
+            <div class="timeline-meta">2023 – 2024</div>
+            <h3>Secretaria da Educação • Diretor I</h3>
+            <p>Gestão administrativa e operacional, coordenação de equipe com aproximadamente 60 colaboradores e organização de processos institucionais.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="card">
+            <div class="timeline-meta">2021 – 2023</div>
+            <h3>Stefanini • Analista de Suporte II</h3>
+            <p>Suporte N1/N2, apoio à infraestrutura, atendimento corporativo, incidentes técnicos, Microsoft 365 e análise de problemas em ambientes de TI.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="card">
+            <div class="timeline-meta">2020 – 2023</div>
+            <h3>IT2B • Analista de Suporte I e II</h3>
+            <p>Suporte a usuários, manutenção de hardware e software, formatação de máquinas, configuração de sistemas operacionais, redes e periféricos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="container">
+      <div class="contact-box reveal">
+        <div>
+          <div class="section-heading" style="margin-bottom: 0.5rem;">
+            <div>
+              <h2>Vamos conversar?</h2>
+            </div>
+          </div>
+          <p style="margin: 0; color: var(--muted); max-width: 60ch;">
+            Se você procura alguém para desenvolver sistemas, criar soluções digitais ou apoiar a infraestrutura de TI da sua empresa, entre em contato.
+          </p>
+          <div class="contact-links">
+            <a href="mailto:victor.sinhoreli@outlook.com">victor.sinhoreli@outlook.com</a>
+            <a href="https://github.com/preckcs" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://wa.me/5517991228136" target="_blank" rel="noreferrer">WhatsApp</a>
+            <a href="#inicio">Voltar ao topo</a>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="https://wa.me/5517991228136" target="_blank" rel="noreferrer">Chamar no WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © 2026 Victor Hugo Sinhoreli Gomes • Portfólio profissional
+    </div>
+  </footer>
+
+  <a class="whatsapp" href="https://wa.me/5517991228136" target="_blank" rel="noreferrer" aria-label="WhatsApp">
+    ✆
+  </a>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll('.reveal').forEach((el, index) => {
+      if (!el.classList.contains('visible')) {
+        el.style.transitionDelay = `${Math.min(index * 60, 320)}ms`;
+      }
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
