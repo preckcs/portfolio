@@ -575,6 +575,12 @@
       transform: translateY(0);
     }
 
+    .services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  }
+
     @media (max-width: 980px) {
       .hero-grid,
       .grid-3,
@@ -596,6 +602,7 @@
         height: 240px;
       }
     }
+    
 
     @media (max-width: 640px) {
       .hero { padding-top: 4rem; }
@@ -796,33 +803,48 @@
   </section>
 
   <section id="servicos">
-    <div class="container">
-      <div class="section-heading reveal">
-        <div>
-          <h2>Serviços</h2>
-        </div>
-        <p>
-          Atuo com soluções técnicas e digitais para empresas que precisam ganhar eficiência, organizar processos e melhorar sua presença online.
-        </p>
+  <div class="container">
+    <div class="section-heading reveal">
+      <div>
+        <h2>Serviços</h2>
       </div>
-      <div class="grid-3">
-        <div class="card reveal">
-          <div class="icon">🚀</div>
-          <h3>Desenvolvimento de Sistemas</h3>
-          <p>Criação de sistemas web sob demanda para controle de atendimento, agendamento, estoque, vendas, clientes e rotinas operacionais.</p>
-        </div>
-        <div class="card reveal">
-          <div class="icon">🔗</div>
-          <h3>APIs e Integrações</h3>
-          <p>Desenvolvimento e documentação de APIs REST, integração entre sistemas e apoio técnico com Postman e Swagger.</p>
-        </div>
-        <div class="card reveal">
-          <div class="icon">🛠️</div>
-          <h3>Suporte e Infraestrutura</h3>
-          <p>Atendimento técnico, análise de falhas, redes, Microsoft 365, Active Directory, VPN, backup, restore e suporte ao ambiente corporativo.</p>
-        </div>
+      <p>
+        Atuo com soluções técnicas e digitais para empresas que precisam ganhar eficiência, organizar processos e melhorar sua presença online.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="card reveal">
+        <div class="icon">🚀</div>
+        <h3>Desenvolvimento de Sistemas</h3>
+        <p>Criação de sistemas web sob demanda para controle de atendimento, agendamento, estoque, vendas, clientes e rotinas operacionais.</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="icon">🔗</div>
+        <h3>APIs e Integrações</h3>
+        <p>Desenvolvimento e documentação de APIs REST, integração entre sistemas e apoio técnico com Postman e Swagger.</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="icon">⚙️</div>
+        <h3>Automação de Processos</h3>
+        <p>Automação de tarefas repetitivas, rotinas operacionais e fluxos internos para reduzir tempo manual, erros e retrabalho dentro das empresas.</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="icon">💬</div>
+        <h3>Chatbot para WhatsApp</h3>
+        <p>Criação de soluções para atendimento automatizado no WhatsApp, captação de leads, respostas rápidas, organização de contatos e melhoria no relacionamento com clientes.</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="icon">🛠️</div>
+        <h3>Suporte e Infraestrutura</h3>
+        <p>Atendimento técnico, análise de falhas, redes, Microsoft 365, Active Directory, VPN, backup, restore e suporte ao ambiente corporativo.</p>
       </div>
     </div>
+  </div>
   </section>
 
   <section id="tecnologias">
